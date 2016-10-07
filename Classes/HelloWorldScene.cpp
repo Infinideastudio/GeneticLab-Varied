@@ -1,9 +1,6 @@
 #include "HelloWorldScene.h"
-#include "Gloop.h"
 #include "Bloop.h"
-#include "Floop.h"
-#include "Sloop.h"
-#include "publicVars.h"
+#include "genetic_lab_varied.h"
 #include<windows.h>
 #include<sstream>
 USING_NS_CC;
@@ -38,14 +35,7 @@ bool World::init()
 		food.emplace_back(make_shared<Food>(*this, 1));
 	//初始化bloops
 	for (int i = 0; i < 60; i++)
-	{
-		if(i<2)
-			bloop.emplace_back(make_shared<Sloop>(*this, 1));
-		else if (i<11)
-			bloop.emplace_back(make_shared<Floop>(*this, 1));
-		else 
-			bloop.emplace_back(make_shared<Gloop>(*this, 1));
-	}
+		bloop.emplace_back(make_shared<Bloop>(*this, 1));
 	camera = Vec2(0, 0);
 	for (int i = 0; i <= 3; i++)
 		keyGroupCamera[i] = false;
@@ -58,8 +48,8 @@ bool World::init()
 	backGround->setColor(Color3B::WHITE);
 	backGround->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
 	this->addChild(backGround, 0);
-	statCD = 0;
 	tick = 0;
+	/*statCD = 0;
 	SYSTEMTIME sysTime;
 	ZeroMemory(&sysTime, sizeof(sysTime));
 	GetLocalTime(&sysTime);
@@ -67,7 +57,7 @@ bool World::init()
 	filePath << "data\\experiment" << (int)sysTime.wYear << "." << (int)sysTime.wMonth << "." << (int)sysTime.wDay<<".";
 	filePath << (int)sysTime.wHour << "_" << (int)sysTime.wMinute << "_" << (int)sysTime.wSecond << ".csv";
 	dataOutPut.open(filePath.str().c_str(), ios::out);
-	dataOutPut << "tick,food,Gloop,Floop,Sloop" << endl;
+	dataOutPut << "tick,food,Gloop,Floop,Sloop" << endl;*/
 	schedule(schedule_selector(World::eventProcessor), 0.02f);
     return true;
 }
@@ -92,31 +82,31 @@ void World::eventProcessor(float dt)
 	//绘制食物
 	for (auto &i : food)
 		i->refreshPosition(camera);
-	//数据统计输出,20s进行一次
-	if (statCD == 0)
-	{
-		statCD = 499;
-		int GloopCount=0, FloopCount=0, SloopCount=0;
-		for (auto &i:bloop)
-		{
-			if (i->die)continue;
-			switch (i->bloopType)
-			{
-			case BloopType::gloop:
-				++GloopCount;
-				break;
-			case BloopType::floop:
-				++FloopCount;
-				break;
-			case BloopType::sloop:
-				++SloopCount;
-				break;
-			}
-		}
-		dataOutPut << tick << "," << food.size() <<",";
-		dataOutPut << GloopCount << "," << FloopCount << "," << SloopCount << endl;
-	}
-	else statCD--;
+	////数据统计输出,20s进行一次
+	//if (statCD == 0)
+	//{
+	//	statCD = 499;
+	//	int GloopCount=0, FloopCount=0, SloopCount=0;
+	//	for (auto &i:bloop)
+	//	{
+	//		if (i->die)continue;
+	//		switch (i->bloopType)
+	//		{
+	//		case BloopType::gloop:
+	//			++GloopCount;
+	//			break;
+	//		case BloopType::floop:
+	//			++FloopCount;
+	//			break;
+	//		case BloopType::sloop:
+	//			++SloopCount;
+	//			break;
+	//		}
+	//	}
+	//	dataOutPut << tick << "," << food.size() <<",";
+	//	dataOutPut << GloopCount << "," << FloopCount << "," << SloopCount << endl;
+	//}
+	//else statCD--;
 	++tick;
 }
 /************************************************

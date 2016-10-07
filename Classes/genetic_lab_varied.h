@@ -1,10 +1,10 @@
-#ifndef PUBLIC_VARS_H
-#define PUBLIC_VARS_H
+#ifndef GENETIC_LAB_VARIED_H
+#define GENETIC_LAB_VARIED_H
 #include"cocos2d.h"
 #define PI 3.14159265358979
 #define worldSizeX 8192
 #define worldSizeY 6144
-namespace publicVars
+namespace genetic_lab_varied
 {
 	static cocos2d::Size smallSize = cocos2d::Size(512, 384);
 	static cocos2d::Size mediumSize = cocos2d::Size(1024, 768);

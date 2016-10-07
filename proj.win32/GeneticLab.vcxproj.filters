@@ -10,9 +10,6 @@
     <Filter Include="src">
       <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Bloop">
-      <UniqueIdentifier>{387c1fca-db2b-4378-acc3-72e5701212cc}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -33,22 +30,13 @@
     <ClCompile Include="..\Classes\PerlinNoise.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Bloop.cpp">
-      <Filter>src\Bloop</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Floop.cpp">
-      <Filter>src\Bloop</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Gloop.cpp">
-      <Filter>src\Bloop</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Sloop.cpp">
-      <Filter>src\Bloop</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\publicVars.cpp">
+    <ClCompile Include="..\Classes\DNA.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\DNA.cpp">
+    <ClCompile Include="..\Classes\genetic_lab_varied.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Bloop.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -71,22 +59,13 @@
     <ClInclude Include="..\Classes\PerlinNoise.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Bloop.h">
-      <Filter>src\Bloop</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Floop.h">
-      <Filter>src\Bloop</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Gloop.h">
-      <Filter>src\Bloop</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Sloop.h">
-      <Filter>src\Bloop</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\publicVars.h">
+    <ClInclude Include="..\Classes\DNA.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\DNA.h">
+    <ClInclude Include="..\Classes\genetic_lab_varied.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Bloop.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
