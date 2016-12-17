@@ -10,11 +10,11 @@ class Bloop final:public Entity
 {
 public:
 	//随机产生
-	Bloop(Layer& layer, int ZOrder);
+	Bloop(cocos2d::Layer& layer, int ZOrder);
 	//单亲繁殖
-	Bloop(Layer& layer, int ZOrder, Bloop& parent);
+	Bloop(cocos2d::Layer& layer, int ZOrder, Bloop& parent);
 	//双亲繁殖
-	Bloop(Layer& layer, int ZOrder, Bloop& parentA, Bloop& parentB);
+	Bloop(cocos2d::Layer& layer, int ZOrder, Bloop& parentA, Bloop& parentB);
 	~Bloop();
 	//根据size计算速度的参数A和B，speed=A+B*size
 	float speedCalcPrmA;

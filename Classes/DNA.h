@@ -4,8 +4,9 @@
 class DNA
 {
 public:
-	bool genes[8];
-	DNA();
+	std::vector<bool>genes;
+	DNA(){}
+	DNA(int DNASize_,int minPhrase_);
 	DNA crossover(DNA partner);
 	virtual void mutate(float mutationRate);
 	virtual cocos2d::Size getPhrase();

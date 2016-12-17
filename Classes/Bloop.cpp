@@ -5,15 +5,16 @@ using namespace cocos2d;
 Bloop::~Bloop()
 {
 	label->removeFromParent();
+	sprite->removeFromParent();
 }
 void Bloop::init(Layer& layer, int ZOrder)
 {
 	initSprite(layer, "images\\bloop.png", ZOrder);
 	shape = Shape::circle;
-	setColor(Color3B(0, 255, 0));
+	setColor(Color3B(255, 255, 0));
 	setRandomPosition(Vec2(0, 0), genetic_lab_varied::superHugeSize);
 	setSize(dna.getPhrase());
-	label = Label::createWithTTF("", "fonts/Marker Felt.ttf", 0.6*size.width);
+	label = Label::createWithTTF("1", "fonts/Marker Felt.ttf", 0.6*size.width);
 	layer.addChild(label, ZOrder + 1);
 	speed = speedCalcPrmA + size.width*speedCalcPrmB;
 	noise.seed = random<unsigned long long>(0, 18446744073709551615ULL);
@@ -25,7 +26,7 @@ void Bloop::init(Layer& layer, int ZOrder)
 }
 Bloop::Bloop(Layer& layer, int ZOrder)
 {
-	dna = DNA();
+	dna = DNA(8,32);
 	init(layer, ZOrder);
 	cycle = random<int>(maxCycle * 1 / 6, maxCycle * 1 / 4);
 }
@@ -44,13 +45,7 @@ Bloop::Bloop(Layer& layer, int ZOrder, Bloop& parentA, Bloop& parentB)
 //改变cycle
 void Bloop::changeCycle(World& world)
 {
-	int gloopCount = 0;
-	for (auto i : world.bloop)
-	{
-		if (i->bloopType == BloopType::gloop)
-			++gloopCount;
-	}
-	cycle += genetic_lab_varied::sunEnergyPerTick / gloopCount;
+	cycle += 0.03;
 }
 //吃食物
 void Bloop::eatFood(World& world)
@@ -68,7 +63,7 @@ void Bloop::eatFood(World& world)
 //吃Bloop
 void Bloop::eatBloop(World& world)
 {
-	if (eatCD > 0)return;
+	/*if (eatCD > 0)return;
 	for (auto iter = world.bloop.begin(); iter != world.bloop.end(); ++iter)
 	{
 		if (((*iter)->bloopType == BloopType::floop || (*iter)->bloopType == BloopType::gloop) && hit(**iter) && size.width>(*iter)->getSize().width)
@@ -78,7 +73,7 @@ void Bloop::eatBloop(World& world)
 				eatCD = (*iter)->bloopType == BloopType::floop ? 500 : 250;
 			break;
 		}
-	}
+	}*/
 }
 //掉落食物
 void Bloop::provideFood(World& world)

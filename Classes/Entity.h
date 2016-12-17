@@ -1,7 +1,7 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 #include "cocos2d.h"
-#include "publicVars.h"
+#include "genetic_lab_varied.h"
 enum class Shape : int
 {
 	circle,

@@ -1,19 +1,19 @@
 #include "DNA.h"
 using namespace cocos2d;
-DNA::DNA()
+DNA::DNA(int DNASize_, int minPhrase_)
 {
-	for (int i = 0; i < DNASize; i++)
-	{
-		genes[i] = random() % 2;
-	}
+	DNASize = DNASize_;
+	minPhrase = minPhrase_;
+	for (int i = 0; i < DNASize; ++i)
+		genes.emplace_back(random<int>(0,1));
 }
 DNA DNA::crossover(DNA partner)
 {
 	DNA child = DNA();
 	for (int i = 0; i<DNASize; i++)
 	{
-		if (random() % 100 + 1 >= 50)child.genes[i] = genes[i];
-		else child.genes[i] = partner.genes[i];
+		if (random<int>(1, 100) >= 50)child.genes.push_back(genes[i]);
+		else child.genes.push_back(partner.genes[i]);
 	}
 	return child;
 }
