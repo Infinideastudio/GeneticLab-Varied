@@ -14,7 +14,7 @@
     <ProjectGuid>{76A39BB2-9B84-4C65-98A5-654D86B86F2A}</ProjectGuid>
     <RootNamespace>test_win32</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <ProjectName>GeneticLab_Varied</ProjectName>
+    <ProjectName>GeneticLab-Varied</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -147,24 +147,41 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\Bloop.cpp" />
+    <ClCompile Include="..\Classes\Chunk.cpp" />
     <ClCompile Include="..\Classes\DNA.cpp" />
     <ClCompile Include="..\Classes\Entity.cpp" />
+    <ClCompile Include="..\Classes\Floop.cpp" />
     <ClCompile Include="..\Classes\Food.cpp" />
+    <ClCompile Include="..\Classes\Gloop.cpp" />
+    <ClCompile Include="..\Classes\Recorder.cpp" />
     <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
+    <ClCompile Include="..\Classes\NeuralNetwork.cpp" />
+    <ClCompile Include="..\Classes\neuron.cpp" />
     <ClCompile Include="..\Classes\PerlinNoise.cpp" />
-    <ClCompile Include="..\Classes\genetic_lab_varied.cpp" />
+    <ClCompile Include="..\Classes\publicVars.cpp" />
+    <ClCompile Include="..\Classes\Sloop.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\Bloop.h" />
+    <ClInclude Include="..\Classes\Chunk.h" />
     <ClInclude Include="..\Classes\DNA.h" />
     <ClInclude Include="..\Classes\Entity.h" />
+    <ClInclude Include="..\Classes\Floop.h" />
     <ClInclude Include="..\Classes\Food.h" />
+    <ClInclude Include="..\Classes\Functions.hpp" />
+    <ClInclude Include="..\Classes\Gloop.h" />
+    <ClInclude Include="..\Classes\Recorder.h" />
     <ClInclude Include="..\Classes\HelloWorldScene.h" />
+    <ClInclude Include="..\Classes\NeuralNetwork.h" />
+    <ClInclude Include="..\Classes\neuron.h" />
+    <ClInclude Include="..\Classes\Node.h" />
     <ClInclude Include="..\Classes\PerlinNoise.h" />
-    <ClInclude Include="..\Classes\genetic_lab_varied.h" />
+    <ClInclude Include="..\Classes\publicVars.h" />
+    <ClInclude Include="..\Classes\Sloop.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\cocos2d\cocos\2d\libcocos2d.vcxproj">
@@ -182,7 +199,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ResourceCompile Include="game.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd" />
+    <Image Include="res\game.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

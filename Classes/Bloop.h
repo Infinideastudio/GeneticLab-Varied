@@ -5,48 +5,39 @@
 #include "DNA.h"
 #include "PerlinNoise.h"
 #include "Food.h"
+#include "NeuralNetwork.h"
 class World;
-class Bloop final:public Entity
+class Chunk;
+enum class BloopType
+{
+	gloop,floop,sloop
+};
+class Bloop :public Entity,std::enable_shared_from_this<Bloop>
 {
 public:
-	//随机产生
-	Bloop(cocos2d::Layer& layer, int ZOrder);
-	//单亲繁殖
-	Bloop(cocos2d::Layer& layer, int ZOrder, Bloop& parent);
-	//双亲繁殖
-	Bloop(cocos2d::Layer& layer, int ZOrder, Bloop& parentA, Bloop& parentB);
-	~Bloop();
-	//根据size计算速度的参数A和B，speed=A+B*size
-	float speedCalcPrmA;
-	float speedCalcPrmB;
-	//tick的cycle增长速度
-	float cycleIncPerTick;
-	//最大细胞周期，超过则分裂
-	float maxCycle;
+	Bloop(){}
+	virtual ~Bloop();
 	virtual void refreshPosition(cocos2d::Vec2 camera_);
-	virtual void move();
-	void tick(World& world);
+	virtual void tick(World& world) = 0;
+	virtual void move(World& world);
+	virtual void OutOfRangeCheck();
+	//把自己加到某个chunk中
+	virtual void addToChunk(Chunk& chunk);
+	//从某个chunk中清除
+	virtual void removeFromChunk(Chunk& chunk);
+	//移动到某个位置
+	virtual void moveTo(cocos2d::Vec2 newPosition, World& world);
+	//获取临近的9个chunk
+	virtual std::vector<Chunk*> getNineNearByChunks(World& world);
 	bool die;
+	BloopType bloopType;
 	//细胞周期
 	float cycle;
-private:
-	DNA dna;
-	//吃食物
-	void eatFood(World& world);
-	//吃Bloop
-	void eatBloop(World& world);
-	//改变cycle
-	void changeCycle(World& world);
-	//每tick产生食物的概率，范围在0~1之间。
-	float foodProvideRatePerTick();
-	//掉落食物
-	void provideFood(World& world);
-	//分裂
-	void divide(World& world);
-	cocos2d::Label* label;
+protected:
+	float maxSpeed;
 	PerlinNoise noise;
-	int eatCD;
-	unsigned long long noiseX;
-	void init(cocos2d::Layer& layer, int ZOrder);
+	cocos2d::Vec2 noiseOff;
+	DNA dna;
+	virtual void init(cocos2d::Layer& layer, int ZOrder) = 0;
 };
 #endif

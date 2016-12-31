@@ -1,139 +1,73 @@
 #include "Bloop.h"
+#include "Chunk.h"
 #include "HelloWorldScene.h"
-#include "genetic_lab_varied.h"
+#include "publicVars.h"
 using namespace cocos2d;
 Bloop::~Bloop()
 {
-	label->removeFromParent();
-	sprite->removeFromParent();
 }
-void Bloop::init(Layer& layer, int ZOrder)
+void Bloop::OutOfRangeCheck()
 {
-	initSprite(layer, "images\\bloop.png", ZOrder);
-	shape = Shape::circle;
-	setColor(Color3B(255, 255, 0));
-	setRandomPosition(Vec2(0, 0), genetic_lab_varied::superHugeSize);
-	setSize(dna.getPhrase());
-	label = Label::createWithTTF("1", "fonts/Marker Felt.ttf", 0.6*size.width);
-	layer.addChild(label, ZOrder + 1);
-	speed = speedCalcPrmA + size.width*speedCalcPrmB;
-	noise.seed = random<unsigned long long>(0, 18446744073709551615ULL);
-	noise.amplitude = 1;
-	noise.frequency = 0.0025*(speed);
-	noiseX = 0;
-	cycle = maxCycle / 4;
-	die = false;
+	Size& chunkSize = parameter::chunkSize;
+	if (getPosition().x < chunkSize.width*0.5)setPosition(getPosition() + Vec2(parameter::worldSize.width, 0));
+	if (getPosition().x > parameter::worldSize.width + chunkSize.width*0.5)setPosition(getPosition() + Vec2(-parameter::worldSize.width, 0));
+	if (getPosition().y < chunkSize.height*0.5)setPosition(getPosition() + Vec2(0, parameter::worldSize.height));
+	if (getPosition().y > parameter::worldSize.height + chunkSize.height*0.5)setPosition(getPosition() + Vec2(0, -parameter::worldSize.height));
 }
-Bloop::Bloop(Layer& layer, int ZOrder)
+void Bloop::moveTo(cocos2d::Vec2 newPosition, World& world)
 {
-	dna = DNA(8,32);
-	init(layer, ZOrder);
-	cycle = random<int>(maxCycle * 1 / 6, maxCycle * 1 / 4);
-}
-Bloop::Bloop(Layer& layer, int ZOrder, Bloop& parent)
-{
-	dna = parent.dna.crossover(parent.dna);
-	dna.mutate(0.02);
-	init(layer, ZOrder);
-}
-Bloop::Bloop(Layer& layer, int ZOrder, Bloop& parentA, Bloop& parentB)
-{
-	dna = parentA.dna.crossover(parentB.dna);
-	dna.mutate(0.02);
-	init(layer, ZOrder);
-}
-//改变cycle
-void Bloop::changeCycle(World& world)
-{
-	cycle += 0.03;
-}
-//吃食物
-void Bloop::eatFood(World& world)
-{
-	for (auto iter = world.food.begin(); iter != world.food.end();)
+	Chunk& nowChunk = getChunk(world);
+	setPosition(newPosition);
+	OutOfRangeCheck();
+	Chunk& nextChunk = getChunk(world);
+	if (std::addressof(nowChunk) != std::addressof(nextChunk))
 	{
-		if (hit(**iter))
-		{
-			cycle += Food::energy;
-			iter = world.food.erase(iter);
-		}
-		else ++iter;
+		removeFromChunk(nowChunk);
+		addToChunk(nextChunk);
 	}
 }
-//吃Bloop
-void Bloop::eatBloop(World& world)
+void Bloop::move(World& world)
 {
-	/*if (eatCD > 0)return;
-	for (auto iter = world.bloop.begin(); iter != world.bloop.end(); ++iter)
-	{
-		if (((*iter)->bloopType == BloopType::floop || (*iter)->bloopType == BloopType::gloop) && hit(**iter) && size.width>(*iter)->getSize().width)
-		{
-			(*iter)->die = true;
-			cycle += (*iter)->cycle*genetic_lab_varied::energyTransferEfficiency;
-				eatCD = (*iter)->bloopType == BloopType::floop ? 500 : 250;
-			break;
-		}
-	}*/
-}
-//掉落食物
-void Bloop::provideFood(World& world)
-{
-	float randomNumber = random<float>(0, 1);
-	if (randomNumber < foodProvideRatePerTick())
-	{
-		cycle -= Food::energy / genetic_lab_varied::energyTransferEfficiency;
-		world.food.emplace_back(std::make_shared<Food>(world, 1));
-		(*(world.food.end() - 1))->setPosition(getPosition());
-	}
-}
-float Bloop::foodProvideRatePerTick()
-{
-	if (cycle < 70)return 0;
-	else return 0.0008 + cycle*0.000005;
-}
-void Bloop::divide(World& world)
-{
-	if (cycle >= maxCycle)
-	{
-		die = true;
-		for (int i = 0; i < 2; ++i)
-		{
-			world.bloop.emplace_back(std::make_shared<Bloop>(world, 1, *this));
-			(*(world.bloop.end() - 1))->setPosition(getPosition());
-		}
-	}
-}
-void Bloop::move()
-{
-	float rad = noise.perlin_noise(noiseX);
-	rad -= ((int)(rad / (2.0 * PI))) * 2.0 * PI;
-	Vec2 deltaPosition= Vec2(cosf(rad),sinf(rad))*speed;
-	setPosition(getPosition() + deltaPosition);
-	if (getPosition().x < -100)setPosition(getPosition()+Vec2(worldSizeX+150,0));
-	if (getPosition().x > worldSizeX+100)setPosition(getPosition() + Vec2(-1 * worldSizeX-150, 0));
-	if (getPosition().y < -100)setPosition(getPosition() + Vec2(0, worldSizeY + 150));
-	if (getPosition().y > worldSizeY+100)setPosition(getPosition() + Vec2(0, -1 * worldSizeY - 150));
-	noiseX++;
+	//float rad = noise.perlin_noise(noiseX);
+	//rad -= (int(rad / (2.0 * PI))) * 2.0 * PI;
+	//Vec2 deltaPosition= Vec2(cosf(rad),sinf(rad))*speed;
+	//moveTo(getPosition() + deltaPosition,world);
+	//noiseX++;
 }
 void Bloop::refreshPosition(Vec2 camera_)
 {
 	sprite->setPosition(position - camera_);
-	label->setPosition(position - camera_);
 }
-void Bloop::tick(World& world)
+//把自己加到某个chunk中
+void Bloop::addToChunk(Chunk& chunk)
 {
-	//移动
-	move();
-	//改变cycle
-	changeCycle(world);
-	//吃食物
-	eatFood(world);
-	//吃bloop
-	eatBloop(world);
-	//提供食物
-	provideFood(world);
-	//绘制
-	refreshPosition(world.camera);
-	//分裂
-	divide(world);
+	chunk.addBloop(shared_from_this());
+}
+//从某个chunk中清除
+void Bloop::removeFromChunk(Chunk& chunk)
+{
+	chunk.removeBloop(shared_from_this());
+}
+//获取临近的9个chunks
+std::vector<Chunk*> Bloop::getNineNearByChunks(World& world)
+{
+	Vec2 position = this->getPosition();
+	if (position.x < 0)position.x += parameter::worldSize.width+ parameter::chunkSize.width;
+	if (position.y < 0)position.y += parameter::worldSize.height + parameter::chunkSize.height;
+	int indexX = position.x / parameter::chunkSize.width;
+	int indexY = position.y / parameter::chunkSize.height;
+	std::vector<Chunk*> result;
+	for (int i = -1; i <= 1; ++i)
+	{
+		for (int j = -1; j <= 1; ++j)
+		{
+			int targetX = indexX + i, targetY = indexY + j;
+			if (targetX < 0)targetX += parameter::chunkCount.width+1;
+			if (targetX >= parameter::chunkCount.width+1)targetX -= parameter::chunkCount.width+1;
+			if (targetY < 0)targetY += parameter::chunkCount.height+1;
+			if (targetY >= parameter::chunkCount.height +1)targetY -= parameter::chunkCount.height +1;
+			result.push_back(&world.chunk[(int)targetX][(int)targetY]);
+		}
+	}
+	return result;
 }

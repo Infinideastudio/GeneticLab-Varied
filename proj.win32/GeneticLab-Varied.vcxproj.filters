@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\Classes\AppDelegate.cpp" />
+    <ClCompile Include="..\Classes\Chunk.cpp" />
+    <ClCompile Include="..\Classes\DNA.cpp" />
+    <ClCompile Include="..\Classes\Entity.cpp" />
+    <ClCompile Include="..\Classes\Food.cpp" />
+    <ClCompile Include="..\Classes\Recorder.cpp" />
+    <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
+    <ClCompile Include="..\Classes\NeuralNetwork.cpp" />
+    <ClCompile Include="..\Classes\neuron.cpp" />
+    <ClCompile Include="..\Classes\PerlinNoise.cpp" />
+    <ClCompile Include="..\Classes\publicVars.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="..\Classes\Bloop.cpp">
+      <Filter>Bloop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Floop.cpp">
+      <Filter>Bloop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Gloop.cpp">
+      <Filter>Bloop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Sloop.cpp">
+      <Filter>Bloop</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Classes\AppDelegate.h" />
+    <ClInclude Include="..\Classes\Chunk.h" />
+    <ClInclude Include="..\Classes\DNA.h" />
+    <ClInclude Include="..\Classes\Entity.h" />
+    <ClInclude Include="..\Classes\Food.h" />
+    <ClInclude Include="..\Classes\Functions.hpp" />
+    <ClInclude Include="..\Classes\Recorder.h" />
+    <ClInclude Include="..\Classes\HelloWorldScene.h" />
+    <ClInclude Include="..\Classes\NeuralNetwork.h" />
+    <ClInclude Include="..\Classes\neuron.h" />
+    <ClInclude Include="..\Classes\Node.h" />
+    <ClInclude Include="..\Classes\PerlinNoise.h" />
+    <ClInclude Include="..\Classes\publicVars.h" />
+    <ClInclude Include="main.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="..\Classes\Bloop.h">
+      <Filter>Bloop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Floop.h">
+      <Filter>Bloop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Gloop.h">
+      <Filter>Bloop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Sloop.h">
+      <Filter>Bloop</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="res">
+      <UniqueIdentifier>{8b5b5f41-8ad9-4c32-b3d4-c95155b783fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Bloop">
+      <UniqueIdentifier>{6d55544e-fe21-4cba-8c78-2c33faccae34}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="game.rc">
+      <Filter>res</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\game.ico">
+      <Filter>res</Filter>
+    </Image>
+  </ItemGroup>
+</Project>

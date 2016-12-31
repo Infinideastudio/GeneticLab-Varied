@@ -4,13 +4,17 @@
 class DNA
 {
 public:
-	std::vector<bool>genes;
-	DNA(){}
-	DNA(int DNASize_,int minPhrase_);
-	DNA crossover(DNA partner);
+	DNA() {}
+	DNA(int SizeDNALength,int BrainDNALength,int MinSize);
+	virtual ~DNA(){}
+	DNA crossOver(DNA partner);
 	virtual void mutate(float mutationRate);
-	virtual cocos2d::Size getPhrase();
-	int DNASize;
-	int minPhrase;
+	virtual cocos2d::Size getSize();
+	virtual float getBrainGene(int index);
+private:
+	int sizeDNALength, brainDNALength;
+	int minSize;
+	std::vector<bool> sizeGene;
+	std::vector<float> brainGene;
 };
 #endif
